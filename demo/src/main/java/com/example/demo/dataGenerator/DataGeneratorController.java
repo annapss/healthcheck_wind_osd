@@ -1,5 +1,7 @@
 package com.example.demo.dataGenerator;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +19,7 @@ public class DataGeneratorController {
     }
 
     @GetMapping
-    public String getData()
+    public Map<String, String> getData()
     {
         return dataGeneratorService.generateData();
     }
