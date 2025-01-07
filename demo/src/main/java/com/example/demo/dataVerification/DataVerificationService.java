@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
+import com.example.demo.dataVerification.nmeaSentences.hdt.HdtVerification;
 import com.example.demo.dataVerification.nmeaSentences.mwv.MwvVerification;
 import com.example.demo.dataVerification.nmeaSentences.rmc.RmcVerification;
 
@@ -25,7 +26,7 @@ public class DataVerificationService {
 
 		String wind_status = MwvVerification.isMwvSentenceValid(windSentence, windTimestamp);
 		String gnss_status = RmcVerification.isRmcSentenceValid(gnssSentence, gnssTimestamp);
-		String gyro_status = RmcVerification.isRmcSentenceValid(gyroSentence, gyroTimestamp);
+		String gyro_status = HdtVerification.isHdtSentenceValid(gyroSentence, gyroTimestamp);
 		//TODO - falta colocar essas informações no banco junto com o mmsi. Elas vao ser inseridas na tabela de Status
 		return "";
     }
