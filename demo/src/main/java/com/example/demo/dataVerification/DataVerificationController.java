@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.databaseTables.Status;
 
 @RestController
 @RequestMapping(path = "api/v1/dataVerification")
@@ -21,8 +22,9 @@ private final DataVerificationService dataVerificationService;
     }
 
     @GetMapping
-    public String checkData() throws MalformedURLException, IOException
+    public Status checkData() throws MalformedURLException, IOException
     {
+        //System.out.println("Testeeeee");
         return dataVerificationService.checkData();
     }
 }
