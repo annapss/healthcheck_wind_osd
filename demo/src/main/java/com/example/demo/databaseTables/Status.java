@@ -28,9 +28,11 @@ public class Status {
     )
     @Column(name = "status_id")
     private Long status_id;
+
     @ManyToOne //FK de embarcaco
     @JoinColumn(name = "embarcacao_id")
-    private Embarcacao embarcacao_id;
+    private Embarcacao embarcacao;
+
     private String sentenca_mwv;
     private String sentenca_rmc;
     private String sentenca_hdt;
@@ -43,7 +45,7 @@ public class Status {
 
     public Status(Embarcacao embarcacao, String sentenca_mwv, String sentenca_rmc, String sentenca_hdt, String sentenca_rov, String radar, String camera, String servico_video, String maquina_embarcacao, Date data)
     {
-        this.embarcacao_id = embarcacao;
+        this.embarcacao = embarcacao;
         this.sentenca_mwv = sentenca_mwv;
         this.sentenca_rmc = sentenca_rmc;
         this.sentenca_hdt = sentenca_hdt;

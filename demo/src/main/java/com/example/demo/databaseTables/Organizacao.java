@@ -1,6 +1,7 @@
 package com.example.demo.databaseTables;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -29,8 +30,10 @@ public class Organizacao {
     )
     @Column(name = "organizacao_id")
     private Long organizacao_id;
-    @OneToMany(mappedBy = "artist")
-    private Set<Embarcacao> embarcacoes = new HashSet<>();
+
+    @OneToMany(mappedBy = "organizacao")
+    private List<Embarcacao> embarcacoes;
+
     private String nome_organizacao;
 
     public Organizacao(String nome_organizacao)

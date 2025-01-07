@@ -1,6 +1,7 @@
 package com.example.demo.databaseTables;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -29,18 +30,21 @@ public class Embarcacao {
     )
     @Column(name = "embarcacao_id")
     private Long embarcacao_id;
+
     @ManyToOne //FK de organizacao
     @JoinColumn(name = "organizacao_id")
-    private Organizacao organizacao_id;
+    private Organizacao organizacao;
+
     @OneToMany(mappedBy = "embarcacao") //relacao de 1:N com a tabela status
-    private Set<Status> status_id = new HashSet<>();
+    private List<Status> status;
+
     private String mmsi;
     private String nome;
     private String data_inicio_contrato;
     private String data_fim_contrato;
     public Embarcacao(Organizacao organizacao_id, String mmsi, String nome, String data_inicio_contrato,
             String data_fim_contrato) {
-        this.organizacao_id = organizacao_id;
+        this.organizacao = organizacao_id;
         this.mmsi = mmsi;
         this.nome = nome;
         this.data_inicio_contrato = data_inicio_contrato;
