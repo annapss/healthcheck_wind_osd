@@ -42,6 +42,9 @@ public class Embarcacao {
     private String nome;
     private String data_inicio_contrato;
     private String data_fim_contrato;
+
+    public Embarcacao(){}
+
     public Embarcacao(Organizacao organizacao_id, String mmsi, String nome, String data_inicio_contrato,
             String data_fim_contrato) {
         this.organizacao = organizacao_id;

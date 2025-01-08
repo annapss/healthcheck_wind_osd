@@ -36,6 +36,8 @@ public class Organizacao {
 
     private String nome_organizacao;
 
+    public Organizacao(){}
+
     public Organizacao(String nome_organizacao)
     {
         this.nome_organizacao = nome_organizacao;

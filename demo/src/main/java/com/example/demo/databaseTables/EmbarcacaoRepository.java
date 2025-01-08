@@ -10,4 +10,6 @@ public interface EmbarcacaoRepository extends JpaRepository<Embarcacao, Long>{
     default Embarcacao updateOrInsert(Embarcacao entity) {
         return save(entity);
     }
+
+    Embarcacao findById(long id);
 }

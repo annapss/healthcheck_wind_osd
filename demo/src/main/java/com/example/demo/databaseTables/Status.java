@@ -43,6 +43,8 @@ public class Status {
     private String maquina_embarcacao;
     private Date data;
 
+    public Status(){}
+
     public Status(Embarcacao embarcacao, String sentenca_mwv, String sentenca_rmc, String sentenca_hdt, String sentenca_rov, String radar, String camera, String servico_video, String maquina_embarcacao, Date data)
     {
         this.embarcacao = embarcacao;

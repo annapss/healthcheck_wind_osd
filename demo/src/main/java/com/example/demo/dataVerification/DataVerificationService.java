@@ -24,48 +24,51 @@ import com.example.demo.databaseTables.Status;
 @Service
 public class DataVerificationService {
 
-	private final StatusRepository statusRepository;
-	private final OrganizacaoRepository organizacaoRepository;
-	private final EmbarcacaoRepository embarcacaoRepository;
+    private final StatusRepository statusRepository;
+    private final OrganizacaoRepository organizacaoRepository;
+    private final EmbarcacaoRepository embarcacaoRepository;
 
-	@Autowired
-	public DataVerificationService(StatusRepository statusRepository, OrganizacaoRepository organizacaoRepository, EmbarcacaoRepository embarcacaoRepository)
-	{
-		this.statusRepository = statusRepository;
-		this.organizacaoRepository = organizacaoRepository;
-		this.embarcacaoRepository = embarcacaoRepository;
-	}
+    @Autowired
+    public DataVerificationService(StatusRepository statusRepository, OrganizacaoRepository organizacaoRepository, EmbarcacaoRepository embarcacaoRepository) {
+        this.statusRepository = statusRepository;
+        this.organizacaoRepository = organizacaoRepository;
+        this.embarcacaoRepository = embarcacaoRepository;
+    }
 
-    public Status checkData() throws MalformedURLException, IOException
-    {
-		//chama o serviço de geração de dados
-		RestClient client = RestClient.create();
-		Map<String, String> json = client.get().uri("http://localhost:8080/api/v1/dataGenerator").retrieve().body(Map.class);
-		String mmsi = json.get("mmsi");
+    public Status checkData() throws MalformedURLException, IOException {
+        //chama o serviço de geração de dados
+        RestClient client = RestClient.create();
+        Map<String, String> json = client.get().uri("http://localhost:8080/api/v1/dataGenerator").retrieve().body(Map.class);
+        String mmsi = json.get("mmsi");
 
-		String windSentence = json.get("sentencaWind");
-		long windTimestamp = Long.parseLong(json.get("sentencaWindTimestamp"));
-		String gnssSentence = json.get("sentencaGnss");
-		long gnssTimestamp = Long.parseLong(json.get("sentencaGnssTimestamp"));
-		String gyroSentence = json.get("sentencaGyro");
-		long gyroTimestamp = Long.parseLong(json.get("sentencaGyroTimestamp"));
+        String windSentence = json.get("sentencaWind");
+        long windTimestamp = Long.parseLong(json.get("sentencaWindTimestamp"));
+        String gnssSentence = json.get("sentencaGnss");
+        long gnssTimestamp = Long.parseLong(json.get("sentencaGnssTimestamp"));
+        String gyroSentence = json.get("sentencaGyro");
+        long gyroTimestamp = Long.parseLong(json.get("sentencaGyroTimestamp"));
 
-		String wind_status = MwvVerification.isMwvSentenceValid(windSentence, windTimestamp);
-		String gnss_status = RmcVerification.isRmcSentenceValid(gnssSentence, gnssTimestamp);
-		String gyro_status = HdtVerification.isHdtSentenceValid(gyroSentence, gyroTimestamp);
-		Calendar instancia = Calendar.getInstance();
-		Date data_atual = instancia.getTime();
-		//DateFormat formataData = DateFormat.getInstance();
-		//String data_atual_str = formataData.format(data_atual);
-		//TODO - falta colocar essas informações no banco junto com o mmsi. Elas vao ser inseridas na tabela de Status
-		
-		Organizacao nova_organizacao = new Organizacao("OceanPact");
-		organizacaoRepository.updateOrInsert(nova_organizacao);
+        String wind_status = MwvVerification.isMwvSentenceValid(windSentence, windTimestamp);
+        String gnss_status = RmcVerification.isRmcSentenceValid(gnssSentence, gnssTimestamp);
+        String gyro_status = HdtVerification.isHdtSentenceValid(gyroSentence, gyroTimestamp);
+        Calendar instancia = Calendar.getInstance();
+        Date data_atual = instancia.getTime();
+        //DateFormat formataData = DateFormat.getInstance();
+        //String data_atual_str = formataData.format(data_atual);
+        //TODO - falta colocar essas informações no banco junto com o mmsi. Elas vao ser inseridas na tabela de Status
 
-		Embarcacao nova_embarcacao = new Embarcacao(nova_organizacao, mmsi, "ABC", null, null);
-		embarcacaoRepository.updateOrInsert(nova_embarcacao);
+        Organizacao org = organizacaoRepository.findById(1);
+        Embarcacao embarcacao = embarcacaoRepository.findById(1);
 
-		Status status_atual = new Status(nova_embarcacao, wind_status, gnss_status, gyro_status, null, null, null, null, null, data_atual);
-		return statusRepository.updateOrInsert(status_atual);
+		if (org == null && embarcacao == null) {
+            org = new Organizacao("OceanPact");
+            organizacaoRepository.updateOrInsert(org);
+
+            embarcacao = new Embarcacao(org, mmsi, "ABC", null, null);
+            embarcacaoRepository.updateOrInsert(embarcacao);
+        }
+
+        Status status_atual = new Status(embarcacao, wind_status, gnss_status, gyro_status, null, null, null, null, null, data_atual);
+        return statusRepository.updateOrInsert(status_atual);
     }
 }

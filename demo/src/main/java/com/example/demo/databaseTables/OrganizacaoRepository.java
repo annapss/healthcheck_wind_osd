@@ -11,4 +11,6 @@ public interface OrganizacaoRepository extends JpaRepository<Organizacao, Long> 
     default Organizacao updateOrInsert(Organizacao entity) {
         return save(entity);
     }
+
+    Organizacao findById(long id);
 }
