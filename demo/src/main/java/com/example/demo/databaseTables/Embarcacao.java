@@ -38,6 +38,9 @@ public class Embarcacao {
     @OneToMany(mappedBy = "embarcacao") //relacao de 1:N com a tabela status
     private List<Status> status;
 
+    @OneToMany(mappedBy = "embarcacao")
+    private List<Relatorio> relatorios;
+
     private String mmsi;
     private String nome;
     private String data_inicio_contrato;
@@ -52,5 +55,10 @@ public class Embarcacao {
         this.nome = nome;
         this.data_inicio_contrato = data_inicio_contrato;
         this.data_fim_contrato = data_fim_contrato;
+    }
+
+    @Override
+    public String toString() {
+        return this.nome;
     }
 }

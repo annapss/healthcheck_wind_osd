@@ -4,29 +4,57 @@ import jakarta.persistence.*;
 
 import java.util.Date;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+
 @Entity
 @Table(name = "relatorio")
 public class Relatorio {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long relatorio_id;
-
-    @OneToOne
+    @ManyToOne //FK de embarcacao
     @JoinColumn(name = "embarcacao_id")
-    Embarcacao embarcacao;
+    private Embarcacao embarcacao;
 
-    @Temporal(TemporalType.TIMESTAMP)
     Date data;
 
     String descricao;
 
-    enum Tipo {
+    String tipo;
+    /*public enum Tipo {
         NAVTI,
         INOVACAO
     }
 
     @Enumerated(EnumType.STRING)
-    Tipo tipo;
+    Tipo tipo;*/
+
+    public Relatorio(Date data, String descricao, Embarcacao embarcacao, String tipo) {
+        this.data = data;
+        this.descricao = descricao;
+        this.embarcacao = embarcacao;
+        this.tipo = tipo;
+    }
+    @Id
+    @SequenceGenerator(
+        name = "relatorio_sequence",
+        sequenceName = "relatorio_sequence",
+        allocationSize = 1
+    )
+    @GeneratedValue(
+        strategy = GenerationType.SEQUENCE,
+        generator = "relatorio_sequence"
+    )
+    private Long relatorio_id;
+
+    @Override
+    public String toString() {
+        return this.descricao;
+    }
 
 }
