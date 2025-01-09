@@ -1,7 +1,5 @@
 package com.example.demo.databaseTables;
 
-import jakarta.persistence.*;
-
 import java.util.Date;
 
 import jakarta.persistence.Entity;
