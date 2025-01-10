@@ -59,4 +59,20 @@ public class Embarcacao {
     public String toString() {
         return this.nome;
     }
+
+    public Long getEmbarcacao_id() {
+        return embarcacao_id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getMmsi() {
+        return mmsi;
+    }
+
+    public Organizacao getOrganizacao() {
+        return organizacao;
+    }
 }

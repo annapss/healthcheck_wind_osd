@@ -55,4 +55,43 @@ public class Relatorio {
         return this.descricao;
     }
 
+    public Embarcacao getEmbarcacao() {
+        return embarcacao;
+    }
+
+    public void setEmbarcacao(Embarcacao embarcacao) {
+        this.embarcacao = embarcacao;
+    }
+
+    public Date getData() {
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public Long getRelatorio_id() {
+        return relatorio_id;
+    }
+
+    public void setRelatorio_id(Long relatorio_id) {
+        this.relatorio_id = relatorio_id;
+    }
 }

@@ -2,15 +2,8 @@ package com.example.demo.databaseTables;
 
 import java.util.Date;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Entity
 @Table(name = "status")
@@ -41,6 +34,8 @@ public class Status {
     private String camera;
     private String servico_video;
     private String maquina_embarcacao;
+
+    @Temporal(TemporalType.TIMESTAMP)
     private Date data;
 
     public Status(){}
@@ -57,5 +52,49 @@ public class Status {
         this.servico_video = servico_video;
         this.maquina_embarcacao = maquina_embarcacao;
         this.data = data;
+    }
+
+    public Long getStatus_id() {
+        return status_id;
+    }
+
+    public Embarcacao getEmbarcacao() {
+        return embarcacao;
+    }
+
+    public String getSentenca_mwv() {
+        return sentenca_mwv;
+    }
+
+    public String getSentenca_rmc() {
+        return sentenca_rmc;
+    }
+
+    public String getSentenca_hdt() {
+        return sentenca_hdt;
+    }
+
+    public String getSentenca_rov() {
+        return sentenca_rov;
+    }
+
+    public String getRadar() {
+        return radar;
+    }
+
+    public String getCamera() {
+        return camera;
+    }
+
+    public String getServico_video() {
+        return servico_video;
+    }
+
+    public String getMaquina_embarcacao() {
+        return maquina_embarcacao;
+    }
+
+    public Date getData() {
+        return data;
     }
 }

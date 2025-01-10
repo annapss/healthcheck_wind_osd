@@ -16,6 +16,4 @@ public interface RelatorioRepository extends JpaRepository<Relatorio, Long> {
 
     Relatorio findById(long id);
 
-    List<Relatorio> findByDataAfter(Date date);
-
 }

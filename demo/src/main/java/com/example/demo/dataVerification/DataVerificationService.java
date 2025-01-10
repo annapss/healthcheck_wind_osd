@@ -69,7 +69,7 @@ public class DataVerificationService {
             organizacaoRepository.updateOrInsert(org);
         }
         if (embarcacao == null) {
-            embarcacao = new Embarcacao(org, mmsi, "ABC", null, null);
+            embarcacao = new Embarcacao(org, mmsi, "SkySea Fishing", null, null);
             embarcacaoRepository.updateOrInsert(embarcacao);
         }
         System.out.println(embarcacao);

@@ -38,4 +38,12 @@ public class Organizacao {
     {
         this.nome_organizacao = nome_organizacao;
     }
+
+    public Long getOrganizacao_id() {
+        return organizacao_id;
+    }
+
+    public String getNome_organizacao() {
+        return nome_organizacao;
+    }
 }
