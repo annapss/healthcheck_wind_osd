@@ -33,7 +33,7 @@ public class RelatorioService {
         statuses.forEach(status -> {
             String nomeEmbarcacao = status.getEmbarcacao().getNome();
 
-            // Inicializa as embarcacoes, se necessário
+            // Inicializa as embarcacoes, se nao existirem
             relatorio.putIfAbsent(nomeEmbarcacao, new HashMap<>());
 
             processarErro(relatorio.get(nomeEmbarcacao), "MWV", status.getSentenca_mwv());
@@ -41,9 +41,10 @@ public class RelatorioService {
         });
 
         // Calcula porcentagens
-        relatorio.forEach((embarcacao, sentencas) -> sentencas.forEach((sentenca, erros) -> {
-            int totalErros = erros.values().stream().mapToInt(Double::intValue).sum();
-            erros.replaceAll((erro, count) -> {
+        relatorio.forEach((embarcacao, sentencas) -> sentencas.forEach((sentenca, qtdErros) -> {
+            // Calcula a qtd total de erros para cada sentenca
+            int totalErros = qtdErros.values().stream().mapToInt(Double::intValue).sum();
+            qtdErros.replaceAll((erro, count) -> {
                 double porcentagem = (count / totalErros) * 100;
                 // Formata a porcentagem para ter 1 casa decimal
                 // Substituir vírgula por ponto antes de converter porque tava dando erro
@@ -56,14 +57,14 @@ public class RelatorioService {
         return relatorio;
     }
 
-    private void processarErro(Map<String, Map<String, Double>> sentencas, String tipoSentenca, String erro) {
+    private void processarErro(Map<String, Map<String, Double>> embarcacao, String tipoSentenca, String sentenca) {
         // Ignora valores nulos ou vazios
-        if (erro == null || erro.isEmpty()) return;
+        if (sentenca == null || sentenca.isEmpty()) return;
 
-        // Inicializa a contagem de erros para a sentença, se necessário
-        sentencas.putIfAbsent(tipoSentenca, new HashMap<>());
+        // Inicializa o result da sentenca, se nao existir
+        embarcacao.putIfAbsent(tipoSentenca, new HashMap<>());
 
         // Incrementa a contagem do erro
-        sentencas.get(tipoSentenca).merge(erro, 1.0, Double::sum);
+        embarcacao.get(tipoSentenca).merge(sentenca, 1.0, Double::sum);
     }
 }
