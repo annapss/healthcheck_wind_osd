@@ -4,19 +4,20 @@ import java.util.Random;
 
 import static java.lang.Math.abs;
 
-public class Camera{
+public class Camera {
 
     // Main apenas para facilitar o chamado
     public static void main(String[] args) {
         String[] ips = generateIPs(1);
+        Camera camera = new Camera();
         for (String s : ips) {
-            ping(s);
+            String resultado = camera.ping(s);
+            System.out.println(resultado);
         }
     }
 
-    // Função opcional para gerar ips- apenas utilizar para testes
     public static String[] generateIPs(int amount) {
-        String [] ips = new String[amount];
+        String[] ips = new String[amount];
         Random rand = new Random();
 
         while (--amount >= 0) {
@@ -31,41 +32,67 @@ public class Camera{
         return ips;
     }
 
-    // Função a chamar para verificar a conexão IP
-    public static void ping(String ip) {
+    public String ping(String ip) {
+        StringBuilder resultado = new StringBuilder();
         double availabilityChance = 0.3;
+        double errorChance = 0.1;
 
         Random rand = new Random();
         boolean isAvailable = rand.nextFloat() > availabilityChance;
+        boolean hasError = rand.nextFloat() < errorChance;
 
-        System.out.println("PING " + ip + " (" + ip + ") 56(84) bytes of data.");
-        double [] totalTime = ping(ip, isAvailable);
-        System.out.println("\n--- " + ip + " ping statistics ---");
-        if (isAvailable) System.out.println("2 packets transmitted, 2 received, 0% packet loss, time " + roundThreeDecimals(totalTime[3]) + "ms");
-        else System.out.println("4 packets transmitted, 0 received, 100% packet loss, time " + roundThreeDecimals(totalTime[3]) + "ms");
+        resultado.append("PING ").append(ip).append(" (").append(ip).append(") 56(84) bytes of data.\n");
 
-        // rtt min/avg/max/mdev = 0.444/0.567/0.690/0.123 ms
-        if (isAvailable) System.out.println("rtt min/avg/max/mdev = " + roundThreeDecimals(totalTime[0]) + "/" + roundThreeDecimals(totalTime[1]) + "/" + roundThreeDecimals(totalTime[2]) + "/" + roundThreeDecimals(totalTime[1] - totalTime[0]));
+        if (hasError) {
+            resultado.append("Packet time limit exceeded.\n");
+            resultado.append("Packet time limit exceeded.\n");
+            resultado.append("Packet time limit exceeded.\n");
+            resultado.append("Packet time limit exceeded.\n");
+            resultado.append("\n--- ").append(ip).append(" ping statistics ---\n");
+            resultado.append("4 packets transmitted, 0 received, 100% packet loss, time ")
+                     .append(roundThreeDecimals(rand.nextFloat() * 10)).append("ms\n");
+            return resultado.toString();
+        }
+
+        double[] totalTime = pingSimulado(ip, isAvailable, resultado);
+
+        resultado.append("\n--- ").append(ip).append(" ping statistics ---\n");
+        if (isAvailable) {
+            resultado.append("2 packets transmitted, 2 received, 0% packet loss, time ")
+                     .append(roundThreeDecimals(totalTime[3])).append("ms\n");
+        } else {
+            resultado.append("4 packets transmitted, 0 received, 100% packet loss, time ")
+                     .append(roundThreeDecimals(totalTime[3])).append("ms\n");
+        }
+
+        if (isAvailable) {
+            resultado.append("rtt min/avg/max/mdev = ")
+                     .append(roundThreeDecimals(totalTime[0])).append("/")
+                     .append(roundThreeDecimals(totalTime[1])).append("/")
+                     .append(roundThreeDecimals(totalTime[2])).append("/")
+                     .append(roundThreeDecimals(totalTime[1] - totalTime[0])).append(" ms");
+        }
+
+        return resultado.toString();
     }
 
-    // Função usada para simular o requerimento do IP
-    private static double[] ping(String ip, boolean status) {
+    private static double[] pingSimulado(String ip, boolean status, StringBuilder resultado) {
         Random rand = new Random();
         int amount = status ? 2 : 4;
 
-        double [] times = new double[4];
-
+        double[] times = new double[4];
         double pingTime = 0;
         times[0] = 10;
 
         for (int i = 0; i < amount; i++) {
-            if (!status) pingTime = 2;
-            else pingTime = rand.nextFloat() % 2;
-
-            wait((int)pingTime * 1000);
-
-            if (status) System.out.println("64 bytes from " + ip + ": icmp_seq=" + (i + 1) + " ttl=64 time=" + roundThreeDecimals(pingTime) + " ms");
-            else System.out.println("Packet time limit exceeded.");
+            if (!status) {
+                pingTime = 2;
+                resultado.append("Packet time limit exceeded.\n");
+            } else {
+                pingTime = rand.nextFloat() % 2;
+                resultado.append("64 bytes from ").append(ip).append(": icmp_seq=").append(i + 1)
+                        .append(" ttl=64 time=").append(roundThreeDecimals(pingTime)).append(" ms\n");
+            }
 
             if (times[0] > pingTime) times[0] = pingTime;
             if (times[2] < pingTime) times[2] = pingTime;
@@ -77,22 +104,7 @@ public class Camera{
         return times;
     }
 
-    // Função usada para aguardar resposta
-    public static void wait(int ms)
-    {
-        try
-        {
-            Thread.sleep(ms);
-        }
-        catch(InterruptedException ex)
-        {
-            Thread.currentThread().interrupt();
-        }
-    }
-
-    // Função usada para arredondar
-    private static double roundThreeDecimals(double d)
-    {
+    private static double roundThreeDecimals(double d) {
         int big = (int) (d * 1000);
         return (double) big / 1000;
     }
