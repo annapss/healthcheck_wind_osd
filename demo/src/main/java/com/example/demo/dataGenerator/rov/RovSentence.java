@@ -1,8 +1,9 @@
 package com.example.demo.dataGenerator.rov;
-
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Random;
 
 public class RovSentence {
@@ -10,13 +11,16 @@ public class RovSentence {
     private String sentence;
     private long timeStamp;
     
-    public String generateSentence() {
+    public static String generateSentence() {
         Random random = new Random();
-        DecimalFormat sixDecimals = new DecimalFormat("00.000000");
-        DecimalFormat threeDigitstwoDecimals = new DecimalFormat("000.00");
-        DecimalFormat twoDecimals = new DecimalFormat("00.00");
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd,MM,yyyy HH:mm:ss");
+        // Configurar DecimalFormat para usar ponto como separador decimal
+        DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(Locale.US);
+        DecimalFormat sixDecimals = new DecimalFormat("00.000000", symbols);
+        DecimalFormat threeDigitstwoDecimals = new DecimalFormat("000.00", symbols);
+        DecimalFormat twoDecimals = new DecimalFormat("00.00", symbols);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
         String dateTime = dateFormat.format(new Date());
 
         double shipLat = random.nextDouble() * 180 - 90;
@@ -58,7 +62,7 @@ public class RovSentence {
 
     public String generateIncorrectSentence() {
         Random random = new Random();
-        DecimalFormat sixDecimals = new DecimalFormat("00.000000");
+        DecimalFormat sixDecimals = new DecimalFormat("00.0000");
         DecimalFormat threeDigitstwoDecimals = new DecimalFormat("000.00");
         DecimalFormat twoDecimals = new DecimalFormat("00.00");
 
@@ -79,11 +83,10 @@ public class RovSentence {
         double rollRov = random.nextDouble() * 90 - 45;
         double latTms = random.nextDouble() * 180 - 90;
         double longTms = random.nextDouble() * 360 - 180;
-        double depthTms = random.nextDouble() * 10000;
 
         // Montar a sentença no formato esperado
         return String.format(
-                "1,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
+                "1,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
                 dateTime,
                 sixDecimals.format(shipLat),
                 sixDecimals.format(shipLong),
@@ -98,8 +101,7 @@ public class RovSentence {
                 twoDecimals.format(pitchRov),
                 twoDecimals.format(rollRov),
                 threeDigitstwoDecimals.format(latTms),
-                threeDigitstwoDecimals.format(longTms),
-                twoDecimals.format(depthTms));
+                threeDigitstwoDecimals.format(longTms));
     }
     
     public String generateRandomSentence() {
@@ -118,5 +120,5 @@ public class RovSentence {
     public long getTimeStamp() {
         return timeStamp;
     }
-    
+     
 }

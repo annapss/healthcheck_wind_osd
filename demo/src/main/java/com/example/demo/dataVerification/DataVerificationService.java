@@ -39,7 +39,7 @@ public class DataVerificationService {
     }
 
     public Status checkData() throws MalformedURLException, IOException {
-        System.out.println("testeeeeeeeeeeee");
+
         //chama o serviço de geração de dados
         RestClient client = RestClient.create();
         Map<String, String> json = client.get().uri("http://localhost:8080/api/v1/dataGenerator").retrieve().body(Map.class);
