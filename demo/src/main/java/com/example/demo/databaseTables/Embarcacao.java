@@ -1,5 +1,6 @@
 package com.example.demo.databaseTables;
 
+import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.Column;
@@ -41,13 +42,13 @@ public class Embarcacao {
 
     private String mmsi;
     private String nome;
-    private String data_inicio_contrato;
-    private String data_fim_contrato;
+    private Date data_inicio_contrato;
+    private Date data_fim_contrato;
 
     public Embarcacao(){}
 
-    public Embarcacao(Organizacao organizacao_id, String mmsi, String nome, String data_inicio_contrato,
-            String data_fim_contrato) {
+    public Embarcacao(Organizacao organizacao_id, String mmsi, String nome, Date data_inicio_contrato,
+            Date data_fim_contrato) {
         this.organizacao = organizacao_id;
         this.mmsi = mmsi;
         this.nome = nome;

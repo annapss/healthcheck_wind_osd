@@ -2,36 +2,34 @@ package com.example.demo.dataVerification.radarVerification;
 import com.example.demo.dataGenerator.radar.RadarGenerator;
 
 public class radarValidator {
-
-    public static String verificaFormatoCorreto(RadarGenerator radar) {
+    public static String verificaFormatoCorreto(Long arquivoA_timestamp, Long arquivoB_timestamp, Long arquivoC_timestamp, String software_radar, Long software_radar_timestamp, String ping_miros) {
         String resultadoVerificacoes = "";
-        if (!verificaArquivosRecentes(radar)) resultadoVerificacoes += "Arquivos antigos\n";
-        if (verificaPingMaquinaRadar(radar)) resultadoVerificacoes +=  "Ping nao funcionou\n";
-        if (!verificaSoftwareRadar(radar)) resultadoVerificacoes += "Software do radar desligado\n";    
+        if (!verificaArquivosRecentes(arquivoA_timestamp, arquivoB_timestamp, arquivoC_timestamp)) resultadoVerificacoes = "Arquivos antigos";
+        if (verificaPingMaquinaRadar(ping_miros)) resultadoVerificacoes =  "Ping não funcionou";
+        if (!verificaSoftwareRadar(software_radar_timestamp, software_radar)) resultadoVerificacoes = "Software do radar desligado";    
         if (resultadoVerificacoes.equals("")) return "OK";
         return resultadoVerificacoes;
     }
 
-    private static boolean verificaArquivosRecentes(RadarGenerator radar) {
+    private static boolean verificaArquivosRecentes(Long arquivoA_timestamp, Long arquivoB_timestamp, Long arquivoC_timestamp) {
         long agora = System.currentTimeMillis();
         long umaHoraMillis = 60 * 60 * 100;
 
-        return (agora - radar.getArquivoA_timestamp() <= umaHoraMillis) &&
-               (agora - radar.getArquivoB_timestamp() <= umaHoraMillis) &&
-               (agora - radar.getArquivoC_timestamp() <= umaHoraMillis);
+        return (agora - arquivoA_timestamp <= umaHoraMillis) &&
+               (agora - arquivoB_timestamp <= umaHoraMillis) &&
+               (agora - arquivoC_timestamp <= umaHoraMillis);
     }
 
-    private static boolean verificaPingMaquinaRadar(RadarGenerator radar) {
-        String ping = radar.getPing_maquina_miros();
+    private static boolean verificaPingMaquinaRadar(String ping_miros) {
         // Verifica se contém resposta de ping
-        return ping.contains("Esgotado o tempo limite do pedido");
+        return ping_miros.contains("Esgotado o tempo limite do pedido");
     }
 
-    private static boolean verificaSoftwareRadar(RadarGenerator radar) {
+    private static boolean verificaSoftwareRadar(Long software_radar_timestamp, String software_radar) {
         long agora = System.currentTimeMillis();
         long umaHoraMillis = 60 * 60 * 1000;
 
-        if (agora - radar.getSoftware_radar_timestamp() > umaHoraMillis) {
+        if (agora - software_radar_timestamp > umaHoraMillis) {
             return false;
         }
         // "OK,ProgramaA,"MirAdm01 - Old Data Disposal",300100,,15351808,6549504,128974
@@ -42,9 +40,8 @@ public class radarValidator {
 		// OK,ProgramaF,"MirRap05 - History File Generator",100500,,15646720,7540736,128948"
 		
         // Verifica se o software radar segue um formato esperado
-        String software = radar.getSoftware_radar();
         String regex = "\\s*OK,Programa[A-Z],\"[^\"]+\",\\d+,,\\d+,\\d+,\\d+\\s*";
-        String[] linhas = software.split("\r\n");
+        String[] linhas = software_radar.split("\r\n");
         
         for (String linha : linhas) {
             //System.out.println(linha);
@@ -55,11 +52,11 @@ public class radarValidator {
         return true;
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         RadarGenerator radar = new RadarGenerator();
         radar.geraDadosRadar();
 
         String formatoCorreto = verificaFormatoCorreto(radar);
         System.out.println(formatoCorreto);
-    }
+    }*/
 }

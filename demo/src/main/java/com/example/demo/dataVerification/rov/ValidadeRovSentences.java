@@ -79,20 +79,4 @@ public class ValidadeRovSentences {
         }
         return "OK";
     }
-
-
-    public static void main(String[] args) {
-        Random random = new Random();
-        for(int i = 0; i < 20; i++){
-            
-            RovSentence rovSentence = new RovSentence();
-            String sentence = rovSentence.generateRandomSentence();
-            long timestamp = System.currentTimeMillis();
-            if (random.nextInt(20) == 0) {
-                timestamp -= 30020;
-            }
-            
-            System.out.println(isValidSentence(sentence, timestamp)); 
-        }
-    }
 }

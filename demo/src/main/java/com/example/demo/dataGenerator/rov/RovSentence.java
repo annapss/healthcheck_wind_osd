@@ -11,7 +11,7 @@ public class RovSentence {
     private String sentence;
     private long timeStamp;
     
-    public static String generateSentence() {
+    private void generateSentence() {
         Random random = new Random();
 
         // Configurar DecimalFormat para usar ponto como separador decimal
@@ -40,7 +40,7 @@ public class RovSentence {
         double depthTms = random.nextDouble() * 10000;
 
         // Montar a sentença no formato esperado
-        return String.format(
+        sentence =  String.format(
                 "1,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
                 dateTime,
                 sixDecimals.format(shipLat),
@@ -60,7 +60,7 @@ public class RovSentence {
                 twoDecimals.format(depthTms));
     }
 
-    public String generateIncorrectSentence() {
+    private void generateIncorrectSentence() {
         Random random = new Random();
         DecimalFormat sixDecimals = new DecimalFormat("00.0000");
         DecimalFormat threeDigitstwoDecimals = new DecimalFormat("000.00");
@@ -85,7 +85,7 @@ public class RovSentence {
         double longTms = random.nextDouble() * 360 - 180;
 
         // Montar a sentença no formato esperado
-        return String.format(
+        sentence =  String.format(
                 "1,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
                 dateTime,
                 sixDecimals.format(shipLat),
@@ -104,13 +104,14 @@ public class RovSentence {
                 threeDigitstwoDecimals.format(longTms));
     }
     
-    public String generateRandomSentence() {
+    public void generateRandomSentence() {
         Random random = new Random();
         timeStamp = System.currentTimeMillis();
         if (random.nextInt(10) == 0) {
-            return generateIncorrectSentence();
+            generateIncorrectSentence();
+            return;
         }
-        return generateSentence();
+        generateSentence();
     }
 
     public String getSentence() {
