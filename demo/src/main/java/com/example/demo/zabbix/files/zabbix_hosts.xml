@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>7.2</version>
+    <host_groups>
+        <host_group>
+            <uuid>8ff2515677ec4913ba00ba2c763c0f3d</uuid>
+            <name>embarcacoes</name>
+        </host_group>
+    </host_groups>
+    <hosts>
+        <host>
+            <host>IlhaFlechas</host>
+            <name>Ilha das Flechas</name>
+            <templates>
+                <template>
+                    <name>embarcacoes_miros</name>
+                </template>
+            </templates>
+            <groups>
+                <group>
+                    <name>embarcacoes</name>
+                </group>
+            </groups>
+        </host>
+        <host>
+            <host>IlhaSantana</host>
+            <name>Ilha de Santana</name>
+            <templates>
+                <template>
+                    <name>embarcacoes_miros</name>
+                </template>
+            </templates>
+            <groups>
+                <group>
+                    <name>embarcacoes</name>
+                </group>
+            </groups>
+        </host>
+        <host>
+            <host>Loreto</host>
+            <name>NS Loreto</name>
+            <templates>
+                <template>
+                    <name>embarcacoes_miros</name>
+                </template>
+            </templates>
+            <groups>
+                <group>
+                    <name>embarcacoes</name>
+                </group>
+            </groups>
+        </host>
+    </hosts>
+</zabbix_export>
