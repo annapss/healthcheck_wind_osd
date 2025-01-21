@@ -1,11 +1,7 @@
 package com.example.demo.dataVerification.rov;
 
-import java.util.Random;
 import java.util.regex.Pattern;
 
-import com.example.demo.dataGenerator.rov.RovSentence;
-
-//TODO Deixar explicito qual erro que a sentenca apresenta
 public class ValidadeRovSentences {
 
     // Padrões para cada campo da sentença

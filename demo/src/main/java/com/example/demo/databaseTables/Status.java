@@ -31,6 +31,7 @@ public class Status {
     private String sentenca_hdt;
     private String sentenca_rov;
     private String radar;
+    @Column(length = 500)
     private String camera;
     private String servico_video;
     private String maquina_embarcacao;

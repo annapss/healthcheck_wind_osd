@@ -7,14 +7,14 @@ import static java.lang.Math.abs;
 public class Camera {
 
     // Main apenas para facilitar o chamado
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         String[] ips = generateIPs(1);
         Camera camera = new Camera();
         for (String s : ips) {
             String resultado = camera.ping(s);
             System.out.println(resultado);
         }
-    }
+    }*/
 
     public static String[] generateIPs(int amount) {
         String[] ips = new String[amount];

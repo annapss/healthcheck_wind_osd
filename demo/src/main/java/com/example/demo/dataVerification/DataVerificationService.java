@@ -1,4 +1,4 @@
-package com.example.demo.dataVerification.ships;
+package com.example.demo.dataVerification;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Date;
@@ -8,16 +8,16 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.RestClient;
 
+import com.example.demo.dataVerification.cameraVerification.CameraPingValidator;
+import com.example.demo.dataVerification.cameraVerification.StatusVideoValidator;
 import com.example.demo.dataVerification.nmeaSentences.hdt.HdtVerification;
 import com.example.demo.dataVerification.nmeaSentences.mwv.MwvVerification;
 import com.example.demo.dataVerification.nmeaSentences.rmc.RmcVerification;
 import com.example.demo.dataVerification.radarVerification.radarValidator;
 import com.example.demo.dataVerification.rov.ValidadeRovSentences;
 import com.example.demo.databaseTables.StatusRepository;
-import com.example.demo.databaseTables.Relatorio;
 import com.example.demo.databaseTables.RelatorioRepository;
 
 import com.example.demo.databaseTables.Embarcacao;
@@ -67,6 +67,8 @@ public class DataVerificationService {
         String softwareRadar = json.get("softwareRadar");
         long softwareRadarTimestamp = Long.parseLong(json.get("softwareRadarTimestamp"));
         String pingComputadorMiros = json.get("pingComputadorMiros");
+        String camera = json.get("camera");
+        String video = json.get("video");
 
         //Verificação de todos os dados gerados
         String wind_status = MwvVerification.isMwvSentenceValid(windSentence, windTimestamp);
@@ -74,7 +76,8 @@ public class DataVerificationService {
         String gyro_status = HdtVerification.isHdtSentenceValid(gyroSentence, gyroTimestamp);
         String rov_status = ValidadeRovSentences.isValidSentence(rovSentence, rovSentenceTimestamp);
         String radar_status = radarValidator.verificaFormatoCorreto(radarTimestampArquivoA, radarTimestampArquivoB, radarTimestampArquivoC, softwareRadar, softwareRadarTimestamp, pingComputadorMiros);
-        
+        String camera_status = CameraPingValidator.verificaPingCamera(camera);
+        String video_status = StatusVideoValidator.validateStatusVideo(video);
         //String radar_status = radarValidator.verificaFormatoCorreto()
         
         Calendar instancia = Calendar.getInstance();
@@ -112,7 +115,7 @@ public class DataVerificationService {
         System.out.println(novoRelatorio);
         if (!descricao.equals("")) relatorioRepository.updateOrInsert(novoRelatorio);*/
 
-        Status status_atual = new Status(embarcacao, wind_status, gnss_status, gyro_status, rov_status, radar_status, null, null, null, data_atual);
+        Status status_atual = new Status(embarcacao, wind_status, gnss_status, gyro_status, rov_status, radar_status, camera_status, video_status, null, data_atual);
         return statusRepository.updateOrInsert(status_atual);
     }
 

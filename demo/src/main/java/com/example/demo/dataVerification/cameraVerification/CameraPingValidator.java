@@ -2,7 +2,7 @@ package com.example.demo.dataVerification.cameraVerification;
 import com.example.demo.dataGenerator.camera.Camera;
 
 public class CameraPingValidator {
-    public String verificaPingCamera(String ip) {
+    public static String verificaPingCamera(String ip) {
         Camera camera = new Camera();
         String pingOutput = camera.ping(ip);
 
@@ -11,14 +11,9 @@ public class CameraPingValidator {
         
 
         if (pingMalSucedido) {
-            return "Falha no ping para a câmera IP: " + ip;
+            return "Falha no ping para a câmera";
         } else {
-            return "Ping bem-sucedido para a câmera IP: " + ip;
+            return "OK";
         }
     }  
-    public static void main(String[] args) {
-        CameraPingValidator cameraPingValidator = new CameraPingValidator();
-        String[] ip = Camera.generateIPs(1);
-        System.out.println(cameraPingValidator.verificaPingCamera(ip[0]));
-    }
 }

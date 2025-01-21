@@ -1,11 +1,13 @@
 package com.example.demo.dataGenerator;
 
+import java.io.ObjectInputFilter.Status;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
 import org.springframework.stereotype.Service;
 
+import com.example.demo.dataGenerator.camera.Camera;
 import com.example.demo.dataGenerator.camera.StatusVideo;
 import com.example.demo.dataGenerator.nmeaSentences.hdt.HdtGenerator;
 import com.example.demo.dataGenerator.nmeaSentences.mwv.MwvGenerator;
@@ -23,6 +25,8 @@ public class DataGeneratorService {
         RovSentence rov = new RovSentence();
         StatusVideo video = new StatusVideo();
         RadarGenerator radar = new RadarGenerator();
+        Camera camera = new Camera();
+
         mwv.generateSentence();
         rmc.generateSentence();
         hdt.generateSentence();
@@ -44,13 +48,10 @@ public class DataGeneratorService {
         String softwareRadar = radar.getSoftware_radar();
         String software_radar_timestamp = Long.toString(radar.getSoftware_radar_timestamp());
         String pingMirosComputer = radar.getPing_maquina_miros();
-
-        Random random = new Random();
-        long numberMmsi = 100000000 + random.nextInt(900000000);
-        String mmsi = String.valueOf(numberMmsi);
+        String pingCamera = camera.ping("192.168.115.41");
+        String servicoVideo =  video.generateStatusVideo();
 
         Map<String, String> json = new HashMap<>();
-        json.put("mmsi", mmsi);
         json.put("sentencaWind", windSentence);
         json.put("sentencaGnss", gnssSentence);
         json.put("sentencaGyro", gyroSentence);
@@ -66,16 +67,10 @@ public class DataGeneratorService {
         json.put("softwareRadar", softwareRadar);
         json.put("softwareRadarTimestamp", software_radar_timestamp);
         json.put("pingComputadorMiros", pingMirosComputer);
-        /*String json = "{"
-        + "\"mmsi\":\"" + mmsi + "\","
-        + "\"sentencaWind\":\"" + windSentence + "\","
-        + "\"sentencaGnss\":\"" + gnssSentence + "\","
-        + "\"sentencaGyro\":\"" + gyroSentence + "\","
-        + "\"sentencaWindTimestamp\":\"" + windTimestamp + "\","
-        + "\"sentencaGnssTimestamp\":\"" + gnssTimestamp + "\","
-        + "\"sentencaGyroTimestamp\":\"" + gyroTimestamp + "\""
-        + "}";*/
-        // Retorna o JSON
+        json.put("camera", pingCamera);
+        json.put("video", servicoVideo);
+        
+
         return json;
     }
 }

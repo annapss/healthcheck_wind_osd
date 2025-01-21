@@ -1,4 +1,4 @@
-package com.example.demo.dataVerification.ships;
+package com.example.demo.dataVerification;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

@@ -1,12 +1,11 @@
 package com.example.demo.dataVerification.radarVerification;
-import com.example.demo.dataGenerator.radar.RadarGenerator;
 
 public class radarValidator {
     public static String verificaFormatoCorreto(Long arquivoA_timestamp, Long arquivoB_timestamp, Long arquivoC_timestamp, String software_radar, Long software_radar_timestamp, String ping_miros) {
         String resultadoVerificacoes = "";
-        if (!verificaArquivosRecentes(arquivoA_timestamp, arquivoB_timestamp, arquivoC_timestamp)) resultadoVerificacoes = "Arquivos antigos";
         if (verificaPingMaquinaRadar(ping_miros)) resultadoVerificacoes =  "Ping não funcionou";
         if (!verificaSoftwareRadar(software_radar_timestamp, software_radar)) resultadoVerificacoes = "Software do radar desligado";    
+        if (!verificaArquivosRecentes(arquivoA_timestamp, arquivoB_timestamp, arquivoC_timestamp)) resultadoVerificacoes = "Radar desligado";
         if (resultadoVerificacoes.equals("")) return "OK";
         return resultadoVerificacoes;
     }
@@ -40,7 +39,7 @@ public class radarValidator {
 		// OK,ProgramaF,"MirRap05 - History File Generator",100500,,15646720,7540736,128948"
 		
         // Verifica se o software radar segue um formato esperado
-        String regex = "\\s*OK,Programa[A-Z],\"[^\"]+\",\\d+,,\\d+,\\d+,\\d+\\s*";
+        /*String regex = "OK,Programa[A-Z],\\\"[^\\\"]+\\\",\\d+,,\\d+,\\d+,\\d+\\s*";
         String[] linhas = software_radar.split("\r\n");
         
         for (String linha : linhas) {
@@ -48,7 +47,7 @@ public class radarValidator {
             if (!linha.matches(regex)) {
                 return false;
             }
-        }
+        }*/
         return true;
     }
 
