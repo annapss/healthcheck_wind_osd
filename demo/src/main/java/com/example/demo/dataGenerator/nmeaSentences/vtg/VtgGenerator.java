@@ -4,11 +4,12 @@ import java.util.Random;
 public class VtgGenerator {
     String sentence;
     long timestamp;
-    /*public static void main(String[] args) {
-        VtgGenerator vtg = new VtgGenerator();
-        vtg.generateSentence();
-    }*/
-    public void generateSentence() {
+    public void generateSentence(boolean correct) {
+        if(correct)
+        {
+            generateCorrectSentence();
+            return;
+        }
         int option = (int)generateValue(1,5);
 		//option = 4; //-> usei para testar as opções separadamente. Vou deixar aqui para caso precise novamente
 		if(option == 1)

@@ -99,18 +99,15 @@ public class SentenceGenerator {
                 twoDecimals.format(depthTms));
     }
     
-    public static String generateRandomSentence() {
+    public static String generateRandomSentence(boolean correct) {
+        if(correct)
+        {
+            return generateSentence();
+        }
         Random random = new Random();
         if (random.nextInt(10) == 0) {
             return generateIncorrectSentence();
         }
         return generateSentence();
-    }
-    public static void main(String[] args) {
-        for (int i = 0; i < 5; i++) { // Gera 5 sentenças como exemplo
-            System.out.println(generateRandomSentence());
-            System.out.println();
-
-        }
     }
 }

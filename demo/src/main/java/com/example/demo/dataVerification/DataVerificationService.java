@@ -46,8 +46,15 @@ public class DataVerificationService {
 
         //chama o serviço de geração de dados
         RestClient client = RestClient.create();
-        Map<String, String> json = client.get().uri("http://localhost:8080/api/v1/dataGenerator").retrieve().body(Map.class);
-
+        Map<String, String> json;
+        if(shipName.equals("Loreto"))
+        {
+            json = client.get().uri("http://localhost:8080/api/v1/dataGenerator/1").retrieve().body(Map.class);
+        }
+        else
+        {
+            json = client.get().uri("http://localhost:8080/api/v1/dataGenerator/0").retrieve().body(Map.class);
+        }
         //Coleta dados de vento gerados
         String windSentence = json.get("sentencaWind");
         long windTimestamp = Long.parseLong(json.get("sentencaWindTimestamp"));

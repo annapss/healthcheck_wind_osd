@@ -17,7 +17,7 @@ import com.example.demo.dataGenerator.rov.RovSentence;
 
 @Service
 public class DataGeneratorService {
-    public Map<String, String> generateData()
+    public Map<String, String> generateData(boolean correct)
     {
         MwvGenerator mwv = new MwvGenerator();
         RmcGenerator rmc = new RmcGenerator();
@@ -27,11 +27,11 @@ public class DataGeneratorService {
         RadarGenerator radar = new RadarGenerator();
         Camera camera = new Camera();
 
-        mwv.generateSentence();
-        rmc.generateSentence();
-        hdt.generateSentence();
-        radar.geraDadosRadar();
-        rov.generateRandomSentence();
+        mwv.generateSentence(correct);
+        rmc.generateSentence(correct);
+        hdt.generateSentence(correct);
+        radar.geraDadosRadar(correct);
+        rov.generateRandomSentence(correct);
 
         String windSentence = mwv.getSentence();
         String windTimestamp = Long.toString(mwv.getTimestamp());
@@ -41,15 +41,15 @@ public class DataGeneratorService {
         String gyroTimestamp = Long.toString(hdt.getTimestamp());
         String rovSentence = rov.getSentence();
         String rovTimestamp = Long.toString(rov.getTimeStamp());
-        String video_status = video.generateStatusVideo();
+        String video_status = video.generateStatusVideo(correct);
         String timestampFileARadar = Long.toString(radar.getArquivoA_timestamp());
         String timestampFileBRadar = Long.toString(radar.getArquivoB_timestamp());
         String timestampFileCRadar = Long.toString(radar.getArquivoC_timestamp());
         String softwareRadar = radar.getSoftware_radar();
         String software_radar_timestamp = Long.toString(radar.getSoftware_radar_timestamp());
         String pingMirosComputer = radar.getPing_maquina_miros();
-        String pingCamera = camera.ping("192.168.115.41");
-        String servicoVideo =  video.generateStatusVideo();
+        String pingCamera = camera.ping("192.168.115.41", correct);
+        String servicoVideo =  video.generateStatusVideo(correct);
 
         Map<String, String> json = new HashMap<>();
         json.put("sentencaWind", windSentence);

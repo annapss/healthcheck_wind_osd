@@ -5,8 +5,13 @@ public class HdtGenerator {
     private long timestamp;
     private String sentence;
 
-    public void generateSentence()
+    public void generateSentence(boolean correct)
 	{
+		if(correct)
+		{
+			generateCorrectSentence(0, 359);
+			return;
+		}
 		int option = (int)generateValue(1,5);
 		//option = 4; //-> usei para testar as opções separadamente. Vou deixar aqui para caso precise novamente
 		if(option == 1)
@@ -82,12 +87,5 @@ public class HdtGenerator {
     public long getTimestamp()
     {
         return timestamp;
-    }
-
-    public static void main(String[] args) {
-        HdtGenerator main = new HdtGenerator();
-		main.generateSentence();
-        //String sentence = main.getSentence();
-        //System.out.println(sentence);
     }
 }

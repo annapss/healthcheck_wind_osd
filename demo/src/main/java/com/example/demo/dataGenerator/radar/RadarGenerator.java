@@ -10,8 +10,15 @@ public class RadarGenerator {
 	private long software_radar_timestamp;
 	private String ping_maquina_miros;
 	
-	public void geraDadosRadar()
+	public void geraDadosRadar(boolean correct)
 	{
+		if(correct)
+		{
+			geraPingMaquinaRadarCorreto();
+			geraArquivosRecentes();
+			geraDadoSoftwareRadarAtualizado();
+			return;
+		}
 		int opcao = (int)geraValorEmIntervaloUmaCasaDecimal(1,5);
 		//opcao = 4; -> usei para testar as op��es separadamente. Vou deixar aqui para caso precise novamente
 		System.out.println("opcao: " + opcao);

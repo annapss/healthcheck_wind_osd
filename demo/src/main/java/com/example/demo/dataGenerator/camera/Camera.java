@@ -6,16 +6,6 @@ import static java.lang.Math.abs;
 
 public class Camera {
 
-    // Main apenas para facilitar o chamado
-    /*public static void main(String[] args) {
-        String[] ips = generateIPs(1);
-        Camera camera = new Camera();
-        for (String s : ips) {
-            String resultado = camera.ping(s);
-            System.out.println(resultado);
-        }
-    }*/
-
     public static String[] generateIPs(int amount) {
         String[] ips = new String[amount];
         Random rand = new Random();
@@ -32,7 +22,7 @@ public class Camera {
         return ips;
     }
 
-    public String ping(String ip) {
+    public String ping(String ip, boolean correct) {
         StringBuilder resultado = new StringBuilder();
         double availabilityChance = 0.3;
         double errorChance = 0.1;
@@ -43,7 +33,7 @@ public class Camera {
 
         resultado.append("PING ").append(ip).append(" (").append(ip).append(") 56(84) bytes of data.\n");
 
-        if (hasError) {
+        if (hasError && !correct) {
             resultado.append("Packet time limit exceeded.\n");
             resultado.append("Packet time limit exceeded.\n");
             resultado.append("Packet time limit exceeded.\n");

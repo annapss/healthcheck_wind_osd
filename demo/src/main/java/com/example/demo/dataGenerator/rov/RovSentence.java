@@ -104,7 +104,7 @@ public class RovSentence {
                 threeDigitstwoDecimals.format(longTms));
     }
     
-    public void generateRandomSentence() {
+    public void generateRandomSentence(boolean correct) {
         Random random = new Random();
         timeStamp = System.currentTimeMillis();
         if (random.nextInt(10) == 0) {
