@@ -6,7 +6,7 @@ public class CameraPingValidator {
         boolean pingMalSucedido = pingOutput.contains("0 received");
         
         if (pingMalSucedido) {
-            return "Falha no ping para a câmera";
+            return "ERRO- Falha no ping para a câmera";
         } else {
             return "OK";
         }

@@ -20,9 +20,15 @@ public class RelatorioController {
         this.relatorioService = relatorioService;
     }
 
-    @GetMapping
+    @GetMapping("/geral")
     public Map<String, Map<String, Map<String, Double>>> getRelatorios() {
         Date currentDate = new Date();
         return relatorioService.getRelatorio(currentDate);
+    }
+
+    @GetMapping("/cameraRadarRov")
+    public Map<String, Map<String, Map<String, Double>>> getRelatorioCameraRadarRov() {
+        Date currentDate = new Date();
+        return relatorioService.getRelatorioCameraRadarRov(currentDate);
     }
 }

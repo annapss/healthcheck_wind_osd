@@ -3,9 +3,9 @@ package com.example.demo.dataVerification.radarVerification;
 public class radarValidator {
     public static String verificaFormatoCorreto(Long arquivoA_timestamp, Long arquivoB_timestamp, Long arquivoC_timestamp, String software_radar, Long software_radar_timestamp, String ping_miros) {
         String resultadoVerificacoes = "";
-        if (verificaPingMaquinaRadar(ping_miros)) resultadoVerificacoes =  "Ping não funcionou";
-        if (!verificaSoftwareRadar(software_radar_timestamp, software_radar)) resultadoVerificacoes = "Software do radar desligado";    
-        if (!verificaArquivosRecentes(arquivoA_timestamp, arquivoB_timestamp, arquivoC_timestamp)) resultadoVerificacoes = "Radar desligado";
+        if (verificaPingMaquinaRadar(ping_miros)) resultadoVerificacoes =  "ERRO - Ping não funcionou";
+        if (!verificaSoftwareRadar(software_radar_timestamp, software_radar)) resultadoVerificacoes = "ERRO - Software do radar desligado";    
+        if (!verificaArquivosRecentes(arquivoA_timestamp, arquivoB_timestamp, arquivoC_timestamp)) resultadoVerificacoes = "ERRO - Radar desligado";
         if (resultadoVerificacoes.equals("")) return "OK";
         return resultadoVerificacoes;
     }

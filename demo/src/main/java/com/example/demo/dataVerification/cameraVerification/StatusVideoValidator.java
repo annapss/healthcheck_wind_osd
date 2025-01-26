@@ -3,7 +3,7 @@ package com.example.demo.dataVerification.cameraVerification;
 public class StatusVideoValidator {
     public static String validateStatusVideo(String statusVideo){
         if (!statusVideo.contains("Active")) {
-            return "Serviço de video inativo";
+            return "ERRO - Serviço de video inativo";
         }
         return "OK";
     }

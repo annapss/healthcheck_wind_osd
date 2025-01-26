@@ -67,6 +67,9 @@ public class Status {
         return sentenca_mwv;
     }
 
+    public String getSentenca_() {
+        return sentenca_mwv;
+    }
     public String getSentenca_rmc() {
         return sentenca_rmc;
     }
