@@ -15,6 +15,7 @@ public class RovSentence {
         Random random = new Random();
 
         // Configurar DecimalFormat para usar ponto como separador decimal
+        timeStamp = System.currentTimeMillis();
         DecimalFormatSymbols symbols = DecimalFormatSymbols.getInstance(Locale.US);
         DecimalFormat sixDecimals = new DecimalFormat("00.000000", symbols);
         DecimalFormat threeDigitstwoDecimals = new DecimalFormat("000.00", symbols);
@@ -61,6 +62,7 @@ public class RovSentence {
     }
 
     private void generateIncorrectSentence() {
+        timeStamp = System.currentTimeMillis() - 60 * 60 * 1000;
         Random random = new Random();
         DecimalFormat sixDecimals = new DecimalFormat("00.0000");
         DecimalFormat threeDigitstwoDecimals = new DecimalFormat("000.00");
@@ -105,6 +107,11 @@ public class RovSentence {
     }
     
     public void generateRandomSentence(boolean correct) {
+        if(correct)
+        {
+            generateSentence();
+            return;
+        }
         Random random = new Random();
         timeStamp = System.currentTimeMillis();
         if (random.nextInt(10) == 0) {

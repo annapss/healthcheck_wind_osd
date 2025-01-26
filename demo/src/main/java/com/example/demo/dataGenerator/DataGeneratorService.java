@@ -48,7 +48,7 @@ public class DataGeneratorService {
         String softwareRadar = radar.getSoftware_radar();
         String software_radar_timestamp = Long.toString(radar.getSoftware_radar_timestamp());
         String pingMirosComputer = radar.getPing_maquina_miros();
-        String pingCamera = camera.ping("192.168.115.41", correct);
+        String pingCamera = camera.ping("192.168.115.41", correct); //Esse da erro
         String servicoVideo =  video.generateStatusVideo(correct);
 
         Map<String, String> json = new HashMap<>();

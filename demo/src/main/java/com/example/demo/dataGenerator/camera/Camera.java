@@ -47,6 +47,10 @@ public class Camera {
         double[] totalTime = pingSimulado(ip, isAvailable, resultado);
 
         resultado.append("\n--- ").append(ip).append(" ping statistics ---\n");
+        if(correct)
+        {
+            isAvailable = true;
+        }
         if (isAvailable) {
             resultado.append("2 packets transmitted, 2 received, 0% packet loss, time ")
                      .append(roundThreeDecimals(totalTime[3])).append("ms\n");
