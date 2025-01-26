@@ -18,7 +18,6 @@ import com.example.demo.dataVerification.nmeaSentences.rmc.RmcVerification;
 import com.example.demo.dataVerification.radarVerification.radarValidator;
 import com.example.demo.dataVerification.rov.ValidadeRovSentences;
 import com.example.demo.databaseTables.StatusRepository;
-import com.example.demo.databaseTables.RelatorioRepository;
 
 import com.example.demo.databaseTables.Embarcacao;
 import com.example.demo.databaseTables.EmbarcacaoRepository;
@@ -32,14 +31,12 @@ public class DataVerificationService {
     private final StatusRepository statusRepository;
     private final OrganizacaoRepository organizacaoRepository;
     private final EmbarcacaoRepository embarcacaoRepository;
-    private final RelatorioRepository relatorioRepository;
 
     @Autowired
-    public DataVerificationService(StatusRepository statusRepository, OrganizacaoRepository organizacaoRepository, EmbarcacaoRepository embarcacaoRepository, RelatorioRepository relatorioRepository) {
+    public DataVerificationService(StatusRepository statusRepository, OrganizacaoRepository organizacaoRepository, EmbarcacaoRepository embarcacaoRepository) {
         this.statusRepository = statusRepository;
         this.organizacaoRepository = organizacaoRepository;
         this.embarcacaoRepository = embarcacaoRepository;
-        this.relatorioRepository = relatorioRepository;
     }
 
     public Status checkData(String shipName) throws MalformedURLException, IOException {
@@ -105,22 +102,6 @@ public class DataVerificationService {
         {
             embarcacao = queryEmbarcacao.get(0);
         }
-        
-
-        /*String descricao = "";
-        if(!wind_status.equals("OK")){
-            descricao += wind_status + "\n";
-        }
-        if(!gnss_status.equals("OK")){
-            descricao += gnss_status + "\n";
-        }
-        if(!gyro_status.equals("OK")){
-            descricao += gyro_status + "\n";
-        }
-        
-        Relatorio novoRelatorio = new Relatorio(data_atual, descricao, embarcacao, "NAVTI");
-        System.out.println(novoRelatorio);
-        if (!descricao.equals("")) relatorioRepository.updateOrInsert(novoRelatorio);*/
 
         Status status_atual = new Status(embarcacao, wind_status, gnss_status, gyro_status, rov_status, radar_status, camera_status, video_status, null, data_atual);
         return statusRepository.updateOrInsert(status_atual);
